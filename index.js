@@ -27,6 +27,5 @@ async function displayRandomPost() {
         console.log('Failed to fetch posts:', error.message);
     }
 }
-
 displayRandomPost();
 
