@@ -1,31 +1,24 @@
-async function displayRandomPost() {
-    const container = document.querySelector('#post-list');
+async function fetchposts() {
+  
+    const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+    const posts = await response.json();
+    displayPosts(posts);
+  
+}
+ function displayPosts(posts) {
+    let ul= document.getElementById('post-list');
+    for(let post of posts){
 
-    try {
-        const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+        let li= document.createElement('li');
+        let h1= document.createElement('h1');
+          let p= document.createElement('p');
 
-        if (!res.ok) {
-            throw new Error(`HTTP error! status: ${res.status}`);
-        }
-
-        const data = await res.json();
-
-        // ✅ Use the first post (tests expect "sunt aut facere repellat...")
-        const item = data[0];
-
-        const heading = document.createElement('h1');
-        heading.textContent = item.title;
-
-        const paragraph = document.createElement('p');
-        paragraph.textContent = item.body;
-
-        container.appendChild(heading);
-        container.appendChild(paragraph);
-
-        return item;
-    } catch (error) {
-        console.log('Failed to fetch posts:', error.message);
+        h1.textContent= post.title;
+        p.textContent= post.body;
+        
+        li.appendChild(h1);
+        li.appendChild(p);
+        ul.appendChild(li); 
     }
 }
-displayRandomPost();
-
+fetchposts();
